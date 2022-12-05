@@ -1,10 +1,10 @@
 import { Component } from 'react';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import React from 'react';
 import Section from './Section/Section';
-// import Statistics from './Statistics/Statistics';
-
-// import FeedbackOptions from './FeedbackOptions/FeedbackOptions';
+import styles from './Section/section.module.css';
+import Statistics from './Statistics/Statistics';
+import FeedbackOptions from './FeedbackOptions/FeedbackOptions';
 import Notification from './Notification/Notification';
 export class App extends Component {
   state = {
@@ -26,31 +26,26 @@ export class App extends Component {
   }
   render() {
     return (
-      <div>
-        <Section title="Please, leave feedback">
-          <button type="button" onClick={this.stateInput}>
-            Good
-          </button>
-          <button type="button" onClick={this.stateInput}>
-            Neutral
-          </button>
-          <button type="button" onClick={this.stateInput}>
-            Bad
-          </button>
+      <div className={styles.form}>
+        <Section className="section" title="Please, leave feedback">
+          <FeedbackOptions
+            options={Object.keys(this.state)}
+            onLeaveFeedback={this.stateInput}
+          />
         </Section>
 
-        <Section title="Statistics">
+        <Section className="section" title="Statistics">
           {!this.countTotalFeedback() > 0 ? (
             <Notification />
           ) : (
             <Section>
-              <p>Good: {this.state.good}</p>
-              <p>Neutral: {this.state.neutral}</p>
-              <p>Bad: {this.state.bad}</p>
-              <p>Total: {this.countTotalFeedback()}</p>
-              <p>
-                Positive feedback: {this.countPositiveFeedbackPercentage()}%
-              </p>
+              <Statistics
+                good={this.state.good}
+                neutral={this.state.neutral}
+                bad={this.state.bad}
+                total={this.countTotalFeedback()}
+                positivePercentage={this.countPositiveFeedbackPercentage()}
+              />
             </Section>
           )}
         </Section>
@@ -58,3 +53,11 @@ export class App extends Component {
     );
   }
 }
+
+Component.propTypes = {
+  state: PropTypes.shape({
+    good: PropTypes.number,
+    neutral: PropTypes.number,
+    bad: PropTypes.number,
+  }),
+};
