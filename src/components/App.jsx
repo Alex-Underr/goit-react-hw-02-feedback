@@ -1,5 +1,4 @@
 import { Component } from 'react';
-import PropTypes from 'prop-types';
 import React from 'react';
 import Section from './Section/Section';
 import styles from './Section/section.module.css';
@@ -53,11 +52,3 @@ export class App extends Component {
     );
   }
 }
-
-Component.propTypes = {
-  state: PropTypes.shape({
-    good: PropTypes.number,
-    neutral: PropTypes.number,
-    bad: PropTypes.number,
-  }),
-};
